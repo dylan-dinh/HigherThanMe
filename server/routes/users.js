@@ -319,9 +319,10 @@ module.exports = function (app, db) {
             password: req.body.password
         };
         if (!info.email || !info.password) {
-            return res.status(422).send({
+             res.status(422).send({
                 error: "Unprocessable Entity"
             });
+            console.log("email ou mdp mauvais")
         } else {
             const user = await db.collection("users").findOne({
                 email: info.email
@@ -331,7 +332,7 @@ module.exports = function (app, db) {
                 bcrypt.compare(info.password, user.password, function (err, result) {
                     if (result) {
                         const token = createToken(info.email);
-                        res.status(200).send({
+                        res.json({
                             token: token
                         });
                     } else {
@@ -340,9 +341,11 @@ module.exports = function (app, db) {
                         });
                     }
                 });
-            } else res.status(403).send({
+            } else {res.status(403).send({
                 error: "user email invalid"
             });
+            console.log("MDR")
+        }
         }
     });
 
