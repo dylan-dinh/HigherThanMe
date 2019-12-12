@@ -1,0 +1,23 @@
+{
+  "name": "higherthanme",
+  "version": "1.0.0",
+  "description": "who is the highest",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dylan DINH François GAYRAUD",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "email-validator": "^2.0.4",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.4.0",
+    "nodemailer": "^6.4.2",
+    "nodemon": "^2.0.2",
+    "password-validator": "^5.0.3"
+  }
+}
