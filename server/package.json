@@ -14,10 +14,15 @@
     "cookie-parser": "^1.4.4",
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
+    "fetch": "^1.1.0",
+    "firebase": "^7.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.4.0",
+    "node-fetch": "^2.6.0",
     "nodemailer": "^6.4.2",
     "nodemon": "^2.0.2",
-    "password-validator": "^5.0.3"
+    "password-validator": "^5.0.3",
+    "querystring": "^0.2.0",
+    "request": "^2.88.0"
   }
 }

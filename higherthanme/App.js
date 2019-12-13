@@ -1,11 +1,11 @@
+import React, {Component} from 'react';
+import {StyleSheet, View, AsyncStorage, StatusBar, Alert} from 'react-native';
 
-import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
-
-import NavigatorService from './Navigation/NavigatorService'
-import './Navigation/Navigator'
+import NavigatorService from './Navigation/NavigatorService';
+import './Navigation/Navigator';
 import AppContainer from './Navigation/Navigator';
-import { ThemeProvider } from "react-native-elements";
+import {ThemeProvider} from 'react-native-elements';
+import firebase from 'react-native-firebase';
 
 import {
   Header,
@@ -15,9 +15,93 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App = () => {
-  return (
-    <>
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.getFcmToken();
+  }
+  getFcmToken = async () => {
+    const fcmToken = await firebase.messaging().getToken();
+    if (fcmToken) {
+      //console.log(fcmToken);
+      token = fcmToken;
+      this.registerToTopic(fcmToken);
+      //this.showAlert('Your Firebase Token is:', fcmToken);
+    } else {
+      this.showAlert('Failed', 'No token received');
+    }
+  };
+
+  requestPermission = async () => {
+    try {
+      await firebase.messaging().requestPermission();
+      // User has authorised
+    } catch (error) {
+      // User has rejected permissions
+    }
+  };
+  checkPermission = async () => {
+    const enabled = await firebase.messaging().hasPermission();
+    if (enabled) {
+      this.getFcmToken();
+    } else {
+      this.requestPermission();
+    }
+  };
+  messageListener = async () => {
+    this.notificationListener = firebase
+      .notifications()
+      .onNotification(notification => {
+        const {title, body} = notification;
+        this.showAlert(title, body);
+      });
+
+    this.notificationOpenedListener = firebase
+      .notifications()
+      .onNotificationOpened(notificationOpen => {
+        const {title, body} = notificationOpen.notification;
+        this.showAlert(title, body);
+      });
+
+    const notificationOpen = await firebase
+      .notifications()
+      .getInitialNotification();
+    if (notificationOpen) {
+      const {title, body} = notificationOpen.notification;
+      this.showAlert(title, body);
+    }
+
+    this.messageListener = firebase.messaging().onMessage(message => {
+      console.log(JSON.stringify(message));
+    });
+  };
+
+  showAlert = (title, message) => {
+    Alert.alert(
+      title,
+      message,
+      [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+      {cancelable: false},
+    );
+  };
+  registerToTopic = token => {
+    firebase
+      .messaging()
+      .subscribeToTopic('SLICK')
+      .then(function(res, err) {
+        console.log('bijour');
+        console.log(res);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  };
+  render() {
+    this.requestPermission();
+    //this.checkPermission();
+    this.messageListener();
+    return (
       <View style={styles.container}>
         <ThemeProvider theme={theme}>
           <AppContainer
@@ -27,16 +111,16 @@ const App = () => {
           />
         </ThemeProvider>
       </View>
-    </>
-  );
-};
+    );
+  }
+}
 
 const theme = {
   Button: {
     titleStyle: {
-      color: "pink"
-    }
-  }
+      color: 'pink',
+    },
+  },
 };
 
 const styles = StyleSheet.create({
@@ -80,5 +164,3 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
-
-export default App;

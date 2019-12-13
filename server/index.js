@@ -6,38 +6,39 @@ const bodyParser = require("body-parser");
 
 const db = require("./config/db");
 
-
 app.use(
-    bodyParser.urlencoded({
-        extended: false
-    })
+  bodyParser.urlencoded({
+    extended: false
+  })
 );
 app.use(bodyParser.json());
+app.use(bodyParser.raw());
 try {
-    MongoClient.connect(
-        db.url, {
-            useUnifiedTopology: true
-        }, {
-            useNewUrlParser: true
-        },
-        (err, database) => {
-            if (err) return console.log(err);
+  MongoClient.connect(
+    db.url,
+    {
+      useUnifiedTopology: true
+    },
+    {
+      useNewUrlParser: true
+    },
+    (err, database) => {
+      if (err) return console.log(err);
 
-            // THIS THE DATABASE NAME AND NOT THE COLLECTION/TABLE NAME
-            database = database.db("HigherThanMe");
+      // THIS THE DATABASE NAME AND NOT THE COLLECTION/TABLE NAME
+      database = database.db("HigherThanMe");
 
+      require("./routes/users")(app, database);
+      app.listen(8000, () => {
+        console.log("We are live on localhost:8000");
+      });
 
-            require("./routes/users")(app, database);
-            app.listen(8000, () => {
-                console.log("We are live on localhost:8000");
-            });
-
-            process.on("SIGINT", function () {
-                console.log("Caught interrupt signal");
-                process.exit();
-            });
-        }
-    );
+      process.on("SIGINT", function() {
+        console.log("Caught interrupt signal");
+        process.exit();
+      });
+    }
+  );
 } catch (error) {
-    console.log(error);
+  console.log(error);
 }

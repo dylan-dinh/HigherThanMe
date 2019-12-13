@@ -4,6 +4,7 @@ import {Button} from 'react-native-elements';
 import qs from 'querystring';
 import '../Navigation/Navigator';
 import '../Navigation/NavigatorService';
+import firebase from 'react-native-firebase';
 
 export default class Register extends Component {
   constructor(props) {
@@ -16,8 +17,20 @@ export default class Register extends Component {
       firstName: '',
       lastName: '',
       city: '',
+      fcmToken: '',
     };
+    this.getFcmToken();
   }
+  getFcmToken = async () => {
+    const fcmToken = await firebase.messaging().getToken();
+    if (fcmToken) {
+      console.log(fcmToken);
+      this.setState({fcmToken: fcmToken});
+      //this.showAlert('Your Firebase Token is:', fcmToken);
+    } else {
+      //this.showAlert('Failed', 'No token received');
+    }
+  };
   handleEmail = text => {
     this.setState({email: text});
   };
@@ -55,6 +68,7 @@ export default class Register extends Component {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         city: this.state.city,
+        deviceId: this.state.fcmToken,
       };
       const response = await fetch('http://localhost:8000/register', {
         method: 'POST',

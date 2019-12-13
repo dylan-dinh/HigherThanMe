@@ -3,8 +3,9 @@ const jwt = require("jsonwebtoken");
 const passwordValidator = require("password-validator");
 const emailValidator = require("email-validator");
 const bcrypt = require("bcrypt");
-
 const privateKey = "this-is-high-privacy";
+const fetch = require("node-fetch");
+const firebase = require("firebase");
 
 const createToken = email => {
   return jwt.sign(
@@ -16,6 +17,48 @@ const createToken = email => {
       expiresIn: "7d"
     }
   );
+};
+
+const sendMsgToAllUser = async (app, db) => {
+  const res = await db.collection("users").find({}, { deviceId: 1 });
+  var doc = Promise.resolve(res.toArray());
+  let array = [];
+  doc.then(async function(res) {
+    res.forEach(function(item) {
+      array.push(item.deviceId);
+    });
+    let content = {
+      //      registration_ids: //array,
+      to:
+        "dpPqrtdQcsU:APA91bEuPwM4ag1e6o9LDaM_cT3vG7gGlpqPtatVPKQ4k4QdR6rSLjKobSQRpVNoqH75BIW7GO6dy4ABz750SkDULiiKor24M-JMp_nx4s2kGA_dSzPKi02VqPWjM7iQp4lee6ZknkEI",
+      notification: {
+        body: "A new ennemy has arrived, be higher than him !",
+        title: "Notification",
+        content_available: true,
+        priority: "high"
+      },
+      data: {
+        body: "A new ennemy has arrived, be higher than him !",
+        title: "Notification",
+        content_available: true,
+        priority: "high"
+      }
+    };
+    console.log(array);
+    try {
+      const rest = await fetch("https://fcm.googleapis.com/fcm/send", {
+        method: "POST",
+        body: JSON.stringify(content),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "key=AIzaSyDVmJz48RBNPjoKvv_j54WuQSW_ZGhELnI"
+        }
+      });
+      console.log(rest);
+    } catch (error) {
+      console.log(error.headers);
+    }
+  });
 };
 
 module.exports = function(app, db) {
@@ -282,7 +325,8 @@ module.exports = function(app, db) {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       city: req.body.city,
-      latitude: "0"
+      latitude: "0",
+      deviceId: req.body.deviceId
     };
     let okPassword = schema.validate(info.password);
     if (!okPassword || !info.password) {
@@ -310,6 +354,7 @@ module.exports = function(app, db) {
             error: "Unprocessable Entity"
           });
         } else {
+          sendMsgToAllUser(app, db);
           res.status(200).send(result.ops[0]);
           console.log(result.ops[0]._id);
         }

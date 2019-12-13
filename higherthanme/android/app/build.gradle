@@ -179,8 +179,16 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-firebase')
+    implementation "com.google.firebase:firebase-analytics:17.2.1"
+    //implementation "com.google.android.gms:play-services-base:15.0.0"
+    //implementation "com.google.firebase:firebase-notifications:16.0.0"
+   // implementation "com.google.android.gms:play-services-base:16.1.0"
+    //implementation "com.google.firebase:firebase-core:17.0.1"
+    implementation "com.google.firebase:firebase-messaging:19.0.1"
     implementation project(':@react-native-community_geolocation')
     implementation project(':react-native-location')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
@@ -201,3 +209,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.google.gms.google-services'
+
