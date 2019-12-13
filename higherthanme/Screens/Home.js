@@ -16,14 +16,18 @@ export default class Login extends Component {
       lastPosition: 'null',
     };
     this.retrieveData();
+    this.getPosition();
   }
   getInfoUser = async token => {
-    const response = await fetch('http://localhost:8000/info_user/' + token, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+    const response = await fetch(
+      'https://higherthanme.herokuapp.com/info_user/' + token,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
       },
-    });
+    );
     const bite = await response.json();
     this.setState({
       firstName: bite.firstName,
@@ -72,18 +76,12 @@ export default class Login extends Component {
           Bonjour {this.state.firstName} {this.state.lastName} de{' '}
           {this.state.city}
         </Text>
-        <Button
-          buttonStyle={styles.submitButton}
-          title="Ma lattitute actuelle"
-          onPress={() => {
-            this.getPosition();
-          }}
-        />
+
         <Text style={styles.titleText}>
-          ma position actuelle {this.state.initialPosition}
+          Ma position actuelle {this.state.initialPosition}
         </Text>
         <Button
-          buttonStyle={styles.decoButton}
+          buttonStyle={styles.submitButton}
           title="Déconnexion"
           onPress={() => {
             this.deconnection();
@@ -117,7 +115,7 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderWidth: 0,
     borderRadius: 5,
-    top: 400,
+    top: 60,
   },
   titleText: {
     fontSize: 20,

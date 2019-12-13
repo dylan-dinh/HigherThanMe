@@ -40,7 +40,7 @@ target 'higherthanme' do
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
 
-  pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
 
   target 'higherthanmeTests' do
     inherit! :search_paths

@@ -5,6 +5,7 @@ import qs from 'querystring';
 import '../Navigation/Navigator';
 import '../Navigation/NavigatorService';
 import firebase from 'react-native-firebase';
+import Geolocation from '@react-native-community/geolocation';
 
 export default class Register extends Component {
   constructor(props) {
@@ -18,8 +19,16 @@ export default class Register extends Component {
       lastName: '',
       city: '',
       fcmToken: '',
+      latitude: '',
     };
     this.getFcmToken();
+    this.getPosition();
+  }
+  getPosition() {
+    Geolocation.getCurrentPosition(position => {
+      const initialPosition = position.coords.latitude;
+      this.setState({position: initialPosition});
+    });
   }
   getFcmToken = async () => {
     const fcmToken = await firebase.messaging().getToken();
@@ -69,14 +78,18 @@ export default class Register extends Component {
         lastName: this.state.lastName,
         city: this.state.city,
         deviceId: this.state.fcmToken,
+        latitude: this.state.latitude,
       };
-      const response = await fetch('http://localhost:8000/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const response = await fetch(
+        'https://higherthanme.herokuapp.com/register',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: qs.stringify(data),
         },
-        body: qs.stringify(data),
-      });
+      );
       const byte = await response.json();
       console.log(response.status);
       if (response.status === 200) {
@@ -175,7 +188,7 @@ export default class Register extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 200,
+    paddingTop: 100,
     backgroundColor: '#2f2d30',
     padding: 30,
     flex: 1,

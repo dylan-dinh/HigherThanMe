@@ -104,7 +104,11 @@ export default class Login extends Component {
           buttonStyle={styles.submitButton}
           title="Get logged in !"
           onPress={() => {
-            this.getLoggedIn('http://localhost:8000/login', email, password);
+            this.getLoggedIn(
+              'https://higherthanme.herokuapp.com/login',
+              email,
+              password,
+            );
           }}
         />
         <Button
