@@ -15,6 +15,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+var token = '';
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -98,8 +99,9 @@ export default class App extends Component {
       });
   };
   render() {
+    console.disableYellowBox = true;
     this.requestPermission();
-    //this.checkPermission();
+    this.checkPermission();
     this.messageListener();
     return (
       <View style={styles.container}>
