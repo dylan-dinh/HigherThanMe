@@ -110,7 +110,7 @@ export default class Login extends Component {
         <Button
           buttonStyle={styles.submitButton2}
           title="Create an account !"
-          onPress={() => retrieveData()}
+          onPress={() => this.props.navigation.navigate('Register')}
         />
       </View>
     );

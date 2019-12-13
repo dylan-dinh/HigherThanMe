@@ -282,7 +282,7 @@ module.exports = function(app, db) {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       city: req.body.city,
-      c
+      latitude: "0"
     };
     let okPassword = schema.validate(info.password);
     if (!okPassword || !info.password) {

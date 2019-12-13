@@ -35,7 +35,7 @@ export default class Login extends Component {
 
   getPosition() {
     Geolocation.getCurrentPosition(position => {
-      const initialPosition = position.coords.altitude;
+      const initialPosition = position.coords.latitude;
       this.setState({initialPosition: initialPosition});
     });
   }
@@ -43,7 +43,7 @@ export default class Login extends Component {
   deconnection = async () => {
     console.log('LOL');
     try {
-      await AsyncStorage.removeItem('token');
+      await AsyncStorage.remove('token');
       console.log('deconnected');
       this.props.navigation.navigate('Login');
     } catch (error) {
@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderWidth: 0,
     borderRadius: 5,
-
     top: 400,
   },
   titleText: {

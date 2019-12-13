@@ -1,10 +1,9 @@
 import * as ReactNavigation from 'react-navigation';
 import React from 'react';
 import LoginScreen from '../Screens/Login';
-//import RegisterScreen from "../Screens/Register"
+import RegisterScreen from '../Screens/Register';
 import HomeScreen from '../Screens/Home';
 import ConnectionStateScreen from '../Screens/HandleConnectionState';
-//import ProfilScreen from "../Screens/Profil"
 
 const AppNavigator = ReactNavigation.createSwitchNavigator(
   {
@@ -16,13 +15,13 @@ const AppNavigator = ReactNavigation.createSwitchNavigator(
         headerLeft: null,
       },
     },
-    /*Register: {
-            screen: RegisterScreen,
-            navigationOptions: () => ({
-                title: "Register",
-                headerBackTitle: null
-            })
-        },*/
+    Register: {
+      screen: RegisterScreen,
+      navigationOptions: () => ({
+        title: 'Register',
+        headerBackTitle: null,
+      }),
+    },
     Home: {
       screen: HomeScreen,
       navigationOptions: () => ({
@@ -37,13 +36,6 @@ const AppNavigator = ReactNavigation.createSwitchNavigator(
         headerBackTitle: null,
       }),
     },
-    /*Profil: {
-            screen: ProfilScreen,
-            navigationOptions: () => ({
-                title: "Welcome",
-                headerBackTitle: null,
-            })
-        },*/
   },
 
   {
