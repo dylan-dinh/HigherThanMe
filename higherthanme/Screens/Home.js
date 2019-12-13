@@ -17,8 +17,9 @@ export default class Login extends Component {
     };
     this.retrieveData();
     this.getPosition();
+    // this.updateLocation();
   }
-  getInfoUser = async token => {
+  getInfoUser = async (token) => {
     const response = await fetch(
       'https://higherthanme.herokuapp.com/info_user/' + token,
       {
@@ -32,15 +33,17 @@ export default class Login extends Component {
     this.setState({
       firstName: byte.firstName,
       lastName: byte.lastName,
+      //initialPosition: byte.initialPosition,
       city: byte.city,
     });
     console.log(byte);
   };
 
-  updateLocation = async = token => {
+  updateLocation = async (token) => {
     const response = await fetch('https://higherthanme.herokuapp.com/update_location/' + token,
       {
         method: 'PUT',
+        body: this.state.initialPosition,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -75,6 +78,7 @@ export default class Login extends Component {
         console.log(value);
         console.log('sucess Retrived token IN HOME');
         this.getInfoUser(value);
+        // this.updateLocation(value);
         console.log(this.state);
       }
     } catch (error) {
