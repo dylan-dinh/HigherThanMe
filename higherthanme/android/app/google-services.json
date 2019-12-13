@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "690415707057",
+    "firebase_url": "https://higherthanme-96f77.firebaseio.com",
+    "project_id": "higherthanme-96f77",
+    "storage_bucket": "higherthanme-96f77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690415707057:android:1fb538034657ca88121390",
+        "android_client_info": {
+          "package_name": "com.higherthanme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690415707057-g4pl3gceufgoknvehbqf0ohf29mrqqi3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkenGPo6jAcdMW03N-amSwuEDK6ghduQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "690415707057-g4pl3gceufgoknvehbqf0ohf29mrqqi3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "690415707057-620ns9maqcv7pqcu8ehssvk8eronsbn3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.higherthanme"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

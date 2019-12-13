@@ -14,7 +14,7 @@ export default class HandleConnectionState extends Component {
   }
 
   retrieveData = async () => {
-    console.log("leleleleellel")
+    console.log('leleleleellel');
     try {
       const value = await AsyncStorage.getItem('token');
       if (value !== null) {
@@ -30,8 +30,11 @@ export default class HandleConnectionState extends Component {
     }
   };
   render() {
-    if (this.state.isConnected == true)
-      return this.props.navigation.navigate('Home');
+    if (this.state.isConnected === true)
+      return (
+        this.props.navigation.navigate('Home') &&
+        this.setState({isConnected: false})
+      );
     else return this.props.navigation.navigate('Login');
   }
 }

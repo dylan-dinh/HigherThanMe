@@ -82,9 +82,6 @@ export default class Login extends Component {
         <Text style={styles.titleText}>
           ma position actuelle {this.state.initialPosition}
         </Text>
-        <Text style={styles.titleText}>
-          ma last position {this.state.lastPosition}
-        </Text>
         <Button
           buttonStyle={styles.decoButton}
           title="Déconnexion"
