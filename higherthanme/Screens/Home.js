@@ -43,7 +43,7 @@ export default class Login extends Component {
   deconnection = async () => {
     console.log('LOL');
     try {
-      await AsyncStorage.remove('token');
+      await AsyncStorage.clear();
       console.log('deconnected');
       this.props.navigation.navigate('Login');
     } catch (error) {

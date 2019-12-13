@@ -161,6 +161,7 @@ export default class Register extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 200,
     backgroundColor: '#2f2d30',
     padding: 30,
     flex: 1,
