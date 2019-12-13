@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, Text, AsyncStorage, ScrollView} from 'react-native';
-import {Button} from 'react-native-elements';
+import React, { Component } from 'react';
+import { View, StyleSheet, Text, AsyncStorage, ScrollView } from 'react-native';
+import { Button } from 'react-native-elements';
 import '../Navigation/Navigator';
 import '../Navigation/NavigatorService';
 import Geolocation from '@react-native-community/geolocation';
@@ -28,19 +28,32 @@ export default class Login extends Component {
         },
       },
     );
-    const bite = await response.json();
+    const byte = await response.json();
     this.setState({
-      firstName: bite.firstName,
-      lastName: bite.lastName,
-      city: bite.city,
+      firstName: byte.firstName,
+      lastName: byte.lastName,
+      city: byte.city,
     });
-    console.log(bite);
+    console.log(byte);
   };
+
+  updateLocation = async = token => {
+    const response = await fetch('https://higherthanme.herokuapp.com/update_location/' + token,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      })
+    const byte = await response.json()
+    console.log(byte)
+    this.setState({ initialPosition: byte.latitude })
+  }
 
   getPosition() {
     Geolocation.getCurrentPosition(position => {
       const initialPosition = position.coords.latitude;
-      this.setState({initialPosition: initialPosition});
+      this.setState({ initialPosition: initialPosition });
     });
   }
 
