@@ -14,10 +14,12 @@ export default class Login extends Component {
       city: '',
       initialPosition: 'null',
       lastPosition: 'null',
-    };
-    this.retrieveData();
-    this.getPosition();
-    // this.updateLocation();
+    };re
+  }
+async componentDidMount()  {
+    await this.retrieveData();
+    await this.updateLocation();
+    await this.getPosition();
   }
   getInfoUser = async (token) => {
     const response = await fetch(
@@ -33,7 +35,7 @@ export default class Login extends Component {
     this.setState({
       firstName: byte.firstName,
       lastName: byte.lastName,
-      //initialPosition: byte.initialPosition,
+      initialPosition: byte.initialPosition,
       city: byte.city,
     });
     console.log(byte);

@@ -4,6 +4,7 @@ import LoginScreen from '../Screens/Login';
 import RegisterScreen from '../Screens/Register';
 import HomeScreen from '../Screens/Home';
 import ConnectionStateScreen from '../Screens/HandleConnectionState';
+import LadderScreen from '../Screens/Ladder';
 
 const AppNavigator = ReactNavigation.createSwitchNavigator(
   {
@@ -13,6 +14,13 @@ const AppNavigator = ReactNavigation.createSwitchNavigator(
         title: 'Login',
         headerStyle: '#2f2d30',
         headerLeft: null,
+      },
+    },
+    Ladder: {
+      screen: LadderScreen,
+      navigationOptions: {
+        title: 'Ladder',
+        headerStyle: '#2f2d30',
       },
     },
     Register: {
@@ -47,7 +55,7 @@ const AppNavigator = ReactNavigation.createSwitchNavigator(
       headerTintColor: 'pink',
       headerTitleStyle: 'pink',
       headerMode: 'screen',
-      cardStyle: {backgroundColor: '#2f2d30'},
+      cardStyle: { backgroundColor: '#2f2d30' },
     },
   },
 );
